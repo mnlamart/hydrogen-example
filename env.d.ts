@@ -19,6 +19,8 @@ declare global {
       // Optional Customer Account API
       PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID?: string;
       PUBLIC_CUSTOMER_ACCOUNT_API_URL?: string;
+      // Optional Admin API (for sample data generation script)
+      SHOPIFY_ADMIN_API_ACCESS_TOKEN?: string;
     }
   }
 }

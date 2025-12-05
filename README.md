@@ -252,6 +252,69 @@ The project is pre-configured for Oxygen deployment:
 - `server.ts` handles Oxygen runtime
 - Environment variables are typed in `env.d.ts`
 
+## Sample Data Generation
+
+This project includes a script to generate sample products and collections using the Shopify Admin API and FakerJS for realistic test data.
+
+### Setup Admin API Access
+
+1. **Create a Custom App in Shopify Admin:**
+   - Go to Shopify Admin → Settings → Apps and sales channels
+   - Click "Develop apps" → "Create an app"
+   - Provide a name for your app (e.g., "Sample Data Generator")
+
+2. **Configure Admin API Scopes:**
+   - In the app settings, click "Configure" under Admin API integration
+   - Grant the following permissions:
+     - `write_products` - To create products
+     - `write_custom_collections` - To create collections
+   - Click "Save"
+
+3. **Install the App and Get Access Token:**
+   - Click "Install app" to install it on your store
+   - After installation, go to the "API credentials" tab
+   - Copy the "Admin API access token"
+   - Add it to your `.env` file:
+     ```env
+     SHOPIFY_ADMIN_API_ACCESS_TOKEN=your-admin-api-access-token-here
+     ```
+
+### Generate Sample Data
+
+Once you have the Admin API access token configured, you can generate sample data:
+
+```bash
+# Generate 10 products and 3 collections (default)
+npm run create:sample-data
+
+# Generate 20 products and 5 collections
+npm run create:sample-products
+
+# Generate custom amounts (products, collections)
+tsx scripts/create-sample-data.ts 15 4
+```
+
+The script will:
+- Create products with realistic names, descriptions, prices, and images
+- Create collections (categories) with random names
+- Associate products with collections automatically
+- Handle rate limiting to respect Shopify API limits
+- Display progress and results
+
+### Script Features
+
+- **Realistic Data**: Uses FakerJS to generate product names, descriptions, prices, SKUs, and more
+- **Rate Limiting**: Automatically delays requests to avoid hitting API rate limits
+- **Error Handling**: Comprehensive error handling with helpful error messages
+- **Progress Feedback**: Shows real-time progress as products and collections are created
+
+### Notes
+
+- **API Approach**: The script uses REST API for product creation (supports variants and images) and GraphQL API for collections and product-collection associations
+- **API Version**: The script uses Shopify Admin API version `2025-01`. Update if needed.
+- **Rate Limits**: The script includes 500ms delays between requests to respect Shopify's rate limits
+- **Development Use**: This script is intended for development and testing. Use caution in production environments
+
 ## Documentation Sources
 
 All documentation is retrieved using context7 MCP server:
